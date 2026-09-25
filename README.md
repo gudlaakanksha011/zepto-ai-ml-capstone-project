@@ -55,3 +55,7 @@ Eight supplied policy documents are embedded locally with `all-MiniLM-L6-v2` and
 
 ## Git workflow
 The repository is intended to be submitted as one public GitHub repository. The required feature-branch workflow should remain visible in Git history.
+
+## Submission Notes
+
+The project is organized as one repository containing all three required modules.
