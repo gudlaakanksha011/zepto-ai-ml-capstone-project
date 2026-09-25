@@ -59,3 +59,5 @@ The repository is intended to be submitted as one public GitHub repository. The 
 ## Submission Notes
 
 The project is organized as one repository containing all three required modules.
+
+The required fixed currency conversion baseline for Module 1 is 1 GBP = 105.50 INR.
