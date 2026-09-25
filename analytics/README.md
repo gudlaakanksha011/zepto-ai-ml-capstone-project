@@ -1,30 +1,11 @@
-# Module 2 — Analytics and Machine Learning
+# Module 2 — Analytics Pipeline
 
-## Objective
+Run:
 
-Analyze the Titanic dataset through exploratory data analysis, visualization, preprocessing, machine learning, and model evaluation.
+```bash
+python analytics/run_analytics.py
+```
 
-## Workflow
+The script loads Titanic once through `sns.load_dataset("titanic")`, immediately saves `analytics/titanic.csv`, and uses that saved/raw DataFrame for the complete workflow. It creates EDA plots, required bivariate/correlation analyses, four multivariate charts, standardization checks, three classifiers, confusion matrices, ROC/AUC, imbalance comparison, Random Forest GridSearchCV/OOB evaluation, multivariate linear regression, residual analysis, CSV metric tables, and a reloadable complete `joblib` pipeline.
 
-Data Loading
-→ Data Cleaning
-→ Exploratory Data Analysis
-→ Visualization
-→ Preprocessing
-→ Classification
-→ Regression
-→ Model Evaluation
-
-## Technologies
-
-- Python
-- Pandas
-- NumPy
-- Seaborn
-- Matplotlib
-- Scikit-learn
-- Joblib
-
-## Status
-
-In progress.
+The classification recommendation is generated from the fixed stratified split and written to `ANALYTICS_REPORT.md`.

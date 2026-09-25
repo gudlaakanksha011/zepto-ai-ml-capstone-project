@@ -1,33 +1,57 @@
-# Zepto AI/ML Capstone Project
+# Zepto Data & AI Platform
 
-## Project Overview
-
-This project is an end-to-end AI/ML engineering project consisting of three modules:
-
-1. Data Pipeline
-2. Analytics and Machine Learning
-3. GenAI Support Assistant
-
-## Project Structure
-
-- `data_pipeline/` - Web scraping, data cleaning, SQLite database, and SQL analysis
-- `analytics/` - Exploratory Data Analysis, visualization, machine learning, and model evaluation
-- `support_assistant/` - Zepto policy assistant using embeddings, ChromaDB, LangGraph, and FastAPI
+End-to-end capstone covering Data Engineering, Analytics/ML, and a grounded GenAI Support Assistant in one repository.
 
 ## Modules
 
-### Module 1 — Data Pipeline
+- `data_pipeline/` — scrape, clean, enrich, normalize into SQLite, query with SQL and pandas.
+- `analytics/` — Titanic EDA, visualization, classification, imbalance handling, tuning, regression, and model persistence.
+- `support_assistant/` — local embeddings + ChromaDB retrieval + LangGraph routing + Pydantic output + FastAPI.
 
-Collect, clean, transform, store, and analyze data using Python, SQLite, and SQL.
+## Setup
 
-### Module 2 — Analytics and Machine Learning
+Create/activate a Python 3.11 virtual environment, then:
 
-Perform EDA, visualization, preprocessing, classification, regression, and model evaluation.
+```bash
+python -m pip install -r requirements.txt
+```
 
-### Module 3 — GenAI Support Assistant
+The project uses one consolidated `requirements.txt`.
 
-Build a policy-based support assistant using document retrieval, embeddings, ChromaDB, LangGraph, and FastAPI.
+## Run
 
-## Status
+```bash
+python data_pipeline/cleaning.py
+python data_pipeline/database.py
+python data_pipeline/queries.py
 
-Project development in progress.
+python analytics/run_analytics.py
+
+python support_assistant/main.py
+```
+
+For the API:
+
+```bash
+uvicorn support_assistant.main:app --reload
+```
+
+Then POST JSON to `/ask`:
+
+```json
+{"query":"How long does delivery take?"}
+```
+
+## Design decisions
+
+### Data pipeline
+The scraper uses the first five catalogue pages so the dataset is deterministic and comfortably exceeds the 60-row requirement. Detail pages provide categories. Numeric parsing is defensive; missing numeric values are median-imputed. The required fixed conversion `1 GBP = 105.50 INR` is used. SQLite is normalized into `categories` and `books` with a foreign key.
+
+### Analytics
+The raw Titanic dataset is loaded once with Seaborn and immediately saved to `analytics/titanic.csv`; all later work uses that CSV. Train/test splitting happens before model preprocessing. A `ColumnTransformer` keeps imputation, encoding, and scaling inside a train-only pipeline. The final saved artifact is the complete preprocessing + estimator pipeline.
+
+### Support assistant
+Eight supplied policy documents are embedded locally with `all-MiniLM-L6-v2` and stored in ChromaDB. LangGraph routes policy questions to retrieval and general questions directly. `MOCK_LLM` defaults to deterministic offline behavior, which is the graded baseline. The API validates the final response with Pydantic.
+
+## Git workflow
+The repository is intended to be submitted as one public GitHub repository. The required feature-branch workflow should remain visible in Git history.

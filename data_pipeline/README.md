@@ -1,27 +1,13 @@
 # Module 1 — Data Pipeline
 
-## Objective
+Run from the repository root:
 
-Build an end-to-end data pipeline that collects book data from Books to Scrape, cleans and transforms the data, stores it in a normalized SQLite database, and performs SQL analysis.
+```bash
+python data_pipeline/cleaning.py
+python data_pipeline/database.py
+python data_pipeline/queries.py
+```
 
-## Workflow
+The first five catalogue pages produce 100 books and multiple categories. The scraper captures title, price, star rating, availability, and category. `price_gbp` is numeric, rating is integer 1–5, and `in_stock` is boolean. Numeric parse failures are median-imputed so malformed rows do not crash the pipeline. The required fixed conversion is `price_inr = price_gbp * 105.50`.
 
-Web Scraping
-→ Data Cleaning
-→ Data Transformation
-→ SQLite Database
-→ SQL Queries
-→ Pandas Analysis
-
-## Technologies
-
-- Python
-- Requests
-- BeautifulSoup
-- Pandas
-- SQLite
-- SQL
-
-## Status
-
-In progress.
+SQLite uses normalized `categories` and `books` tables with a primary-key/foreign-key relationship. Five query outputs are saved as CSV files. The final JOIN is reproduced with `pd.read_sql` and `pd.merge`.

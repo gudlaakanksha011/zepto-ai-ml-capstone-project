@@ -1,12 +1,11 @@
-# Python virtual environment
 .venv/
-
-# Python cache files
 __pycache__/
 *.pyc
-
-# Environment variables and API keys
 .env
-
-# Jupyter Notebook temporary files
+*.log
 .ipynb_checkpoints/
+
+analytics/plots/*.png
+analytics/models/*.joblib
+
+support_assistant/chroma_db/
